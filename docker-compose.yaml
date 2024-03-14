@@ -1,0 +1,10 @@
+version: "3.8"
+services:
+  api:
+    build: ./backend/api
+    container_name: api_c
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend/api:/api
+      - ./backend/api/node_modules:/api/node_modules
