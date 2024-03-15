@@ -22,7 +22,7 @@ services:
       - MONGO_URI=mongodb://mongo_db:27017
       - DB_NAME=my_db
     volumes:
-      - ./backend/api:/api
+      - ./backend/api/src:/api/src
       - ./backend/api/node_modules:/api/node_modules
 volumes:
   mongo_db:

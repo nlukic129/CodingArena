@@ -1,6 +1,8 @@
 import express, { Request, Response } from "express";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+
+import { connectToDb } from "./connection";
+
 dotenv.config();
 
 const PORT = process.env.PORT;
@@ -11,16 +13,12 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hello, World!");
 });
 
-const mongodbUri = process.env.MONGO_URI || "";
-
-mongoose
-  .connect(mongodbUri, {
-    dbName: process.env.DB_NAME,
-  })
+connectToDb()
   .then(() => {
-    console.log("Mongodb connected....");
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
     });
   })
-  .catch((err) => console.log(err.message));
+  .catch((err) => {
+    console.error(err);
+  });
