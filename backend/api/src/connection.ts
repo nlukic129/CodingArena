@@ -1,5 +1,8 @@
 import mongoose, { ConnectOptions } from "mongoose";
 
+import { createError } from "./utils/error";
+import { ErrorMessage } from "./types/ErrorTypes";
+
 export const connectToDb = async () => {
   try {
     const mongodbUri = process.env.MONGO_URI || "";
@@ -28,6 +31,6 @@ export const connectToDb = async () => {
       process.exit(0);
     });
   } catch (err: Error | any) {
-    throw new Error(err.message);
+    throw createError(err.message, 500, [{ msg: ErrorMessage.DbConnectionFailed }]);
   }
 };

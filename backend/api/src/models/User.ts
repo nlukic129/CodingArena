@@ -1,8 +1,8 @@
 import { Schema, model } from "mongoose";
 
-import { IUser, Rank } from "../interfaces/UserModelTypes";
+import { TUser, Rank } from "../types/UserModelTypes";
 
-const userSchema = new Schema<IUser>({
+const userSchema = new Schema<TUser>({
   username: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
@@ -19,4 +19,4 @@ const userSchema = new Schema<IUser>({
   validated: { type: Boolean, required: true },
 });
 
-export default model<IUser>("User", userSchema);
+export default model<TUser>("User", userSchema);

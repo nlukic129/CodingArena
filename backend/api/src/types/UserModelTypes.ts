@@ -1,15 +1,22 @@
-export interface IUser {
+export type TUser = {
   username: string;
   email: string;
   password: string;
   rank: Rank;
-  score: Score;
+  score: IScore;
   points: number;
   image: string;
   validated: boolean;
-}
+};
 
-interface Score {
+export type TNewUser = {
+  username: string;
+  email: string;
+  password: string;
+  repeatedPassword: string;
+};
+
+interface IScore {
   wins: number;
   losses: number;
 }
