@@ -4,7 +4,7 @@ import cors from "cors";
 
 import { connectToDb } from "./connection";
 import authRoutes from "./routes/auth";
-import { CustomError } from "./types/ErrorTypes";
+import { TCustomError } from "./types/ErrorTypes";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -16,7 +16,7 @@ app.use(cors());
 
 app.use("/auth", authRoutes);
 
-app.use((error: CustomError, _req: express.Request, res: express.Response, _next: express.NextFunction): any => {
+app.use((error: TCustomError, _req: express.Request, res: express.Response, _next: express.NextFunction): any => {
   const title: string = error.title;
   const status: number = error.statusCode || 500;
   const errors: any = error.errors;

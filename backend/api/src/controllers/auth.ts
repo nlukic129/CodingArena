@@ -1,10 +1,13 @@
-import { TNewUser } from "../types/UserModelTypes";
-
-import { Request, Response } from "express";
+import { Request, Response, NextFunction } from "express";
 import { validationResult } from "express-validator";
+import bcrypt from "bcryptjs";
+
+import { TNewUser, TUser } from "../types/UserModelTypes";
 import { createError } from "../utils/error";
-import { NextFunction } from "express";
 import { ErrorMessage } from "../types/ErrorTypes";
+import User from "../models/User";
+import { Message } from "../types/Messages";
+import { TResponse } from "../types/Response";
 
 /**
  * Handles the registration of a new user.
@@ -12,8 +15,10 @@ import { ErrorMessage } from "../types/ErrorTypes";
  * @param _req - The request object.
  * @param res - The response object.
  * @param next - The next function.
+ * @returns A JSON response with the registered user's data.
+ * @throws {Error} If validation fails or an error occurs during user creation.
  */
-export const register = (_req: Request, res: Response, next: NextFunction) => {
+export const register = async (_req: Request, res: Response, next: NextFunction) => {
   try {
     const errors = validationResult(_req).array();
 
@@ -21,9 +26,14 @@ export const register = (_req: Request, res: Response, next: NextFunction) => {
       throw createError(ErrorMessage.ValidationFailed, 422, errors);
     }
 
-    const userData: TNewUser = _req.body;
+    const newUserData: TNewUser = _req.body;
+    newUserData.password = await bcrypt.hash(newUserData.password, 12);
 
-    res.status(200).json(userData);
+    const newUser: TUser = await User.create(newUserData);
+
+    const response: TResponse = { message: Message.UserRegisteredSuccessfully, data: newUser };
+
+    res.status(201).json(response);
   } catch (error: any) {
     if (!error.statusCode) {
       error.statusCode = 500;

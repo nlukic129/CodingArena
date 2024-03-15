@@ -11,7 +11,7 @@ export const checkUsernameNotExist = async (value: string) => {
   try {
     const existingUser = await User.findOne({ username: value });
     if (existingUser) {
-      Promise.reject(ErrorMessage.UsernameExists);
+      return Promise.reject(ErrorMessage.UsernameExists);
     }
 
     return true;
@@ -29,7 +29,7 @@ export const checkEmailNotExist = async (value: string) => {
   try {
     const existingUser = await User.findOne({ email: value });
     if (existingUser) {
-      Promise.reject(ErrorMessage.EmailExists);
+      return Promise.reject(ErrorMessage.EmailExists);
     }
 
     return true;

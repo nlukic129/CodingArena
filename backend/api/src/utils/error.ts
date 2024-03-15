@@ -1,4 +1,4 @@
-import { CustomError } from "../types/ErrorTypes";
+import { TCustomError } from "../types/ErrorTypes";
 
 /**
  * Creates a custom error object.
@@ -6,9 +6,9 @@ import { CustomError } from "../types/ErrorTypes";
  * @param {any} title - The title of the error.
  * @param {any} statusCode - The status code of the error.
  * @param {Array<any>} errors - An array of error objects.
- * @returns {CustomError} - The custom error object.
+ * @returns {TCustomError} - The custom error object.
  */
-export const createError = (title: any, statusCode: any, errors: Array<any>): CustomError => {
+export const createError = (title: string, statusCode: number, errors: Array<any>): TCustomError => {
   const error: any = new Error(title);
   error.statusCode = statusCode;
   error.errors = errors;

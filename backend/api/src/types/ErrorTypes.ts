@@ -10,7 +10,7 @@ export enum ErrorMessage {
   ValidationFailed = "Validation failed.",
 }
 
-export type CustomError = {
+export type TCustomError = {
   title: string;
   statusCode: number;
   errors: Array<{ msg: string }>;
